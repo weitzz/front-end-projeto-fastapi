@@ -10,4 +10,9 @@ async function getData() {
 export default getData
 
 
+export async function getDataById(id:any) {
+  const res = await fetch(`http://localhost:8000/api/medicamentos/${id}`);
+  console.log(res)
+   return res.json();
+ }
 
