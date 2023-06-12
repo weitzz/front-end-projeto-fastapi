@@ -50,3 +50,8 @@ export async function editData(medicamento: TMedicamento) {
   }
 }
 
+export async function deleteData(id: number) {
+  await fetch(`http://localhost:8000/api/medicamentos/${id}`,{
+    method: 'DELETE',
+  });
+}
