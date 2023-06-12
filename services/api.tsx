@@ -1,6 +1,7 @@
+import Medicamento from "@/components/Medicamento/Medicamento";
 import { TMedicamento } from "@/types";
 
-async function getData() {
+async function getData():Promise<TMedicamento[]> {
   const res = await fetch('http://localhost:8000/api/medicamentos', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
@@ -23,19 +24,29 @@ export async function postData(medicamento: TMedicamento) {
   });
 
   if (res.ok) {
-    // Sucesso ao cadastrar o medicamento
     const newMedicamento = await res.json()
     return newMedicamento
   } else {
-    // Lidar com erros de resposta do servidor
     console.error('Erro ao cadastrar medicamento');
   }
 }
 
 
-export async function getDataById(id: any) {
-  const res = await fetch(`http://localhost:8000/api/medicamentos/${id}`);
-  console.log(res)
-  return res.json();
+export async function editData(medicamento: TMedicamento) {
+  const res = await fetch(`http://localhost:8000/api/medicamentos/${medicamento.id}`,{
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(medicamento)
+
+
+  });
+  if(res.ok){
+    const updateMedicamento = res.json()
+    return updateMedicamento
+  } else {
+    console.error('Erro ao editar medicamento');
+  }
 }
 

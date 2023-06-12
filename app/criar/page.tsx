@@ -7,17 +7,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 const CadastrarMedicamento = () => {
   const router = useRouter()
-  const [newMedicamento, setNewMedicamento] = useState()
+  const [newMedicamento, setNewMedicamento] = useState('')
 
   const handleSubmit :FormEventHandler<HTMLFormElement> = async (event) =>{
     event.preventDefault()
     await postData({
+      id: uuidv4(),
       nome: '',
       preco: '',
       data_de_validade: '',
-      imagem: '',
-      id: uuidv4()
-    })
+      imagem: ''
+    }),
+    setNewMedicamento('')
+    router.refresh()
   }
 
 
@@ -56,7 +58,7 @@ const CadastrarMedicamento = () => {
             <input type="file" className="file-input w-full max-w-xs" />
           </div>
         </div>
-        <div className='w-full md:w-1/2  mt-6 flex justify-between'>
+        <div className='w-full  mt-6 flex justify-between'>
         <button
           type="button" onClick={() => router.push(`/`)}
           className="inline-block px-6 py-2.5 bg-sky-800 text-neutral-100 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-sky-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"

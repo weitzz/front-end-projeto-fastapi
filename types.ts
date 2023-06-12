@@ -1,5 +1,5 @@
 export type TMedicamento = {
-    id?: number | string
+    id?: number | string | undefined
     nome: string
     preco: string
     data_de_validade: string
