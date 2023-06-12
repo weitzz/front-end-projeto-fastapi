@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Header = () => {
     const [active, setActive] = useState(false);
-
+   
     const onClick = () => {
         setActive(!active);
     };
@@ -34,10 +34,10 @@ const Header = () => {
 
                             <li className="list-none md:mr-2">
                                 <Link
-                                    href="/editar"
+                                    href="/criar"
                                     className="flex w-full text-neutral-100 font-bold  hover:text-[#fff]  cursor-pointerpt-2.5 px-2.5"
                                 >
-                                    Editar
+                                    Adicionar 
                                 </Link>
                             </li>
                         </ul>

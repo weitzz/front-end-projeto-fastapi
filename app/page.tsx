@@ -1,15 +1,13 @@
 import Medicamento from "@/components/Medicamento/Medicamento";
 import getData from "@/services/api";
 import { TMedicamento } from "@/types";
-import Link from "next/link";
 
 
 export default async function Home() {
   const data = await getData();
 
-  console.log(data)
   return (
-    <main className="h-screen">
+    <main>
         <table className=" w-full mt-10 ">
           <thead className=" border-b-2 border-gray-400">
             <tr>
