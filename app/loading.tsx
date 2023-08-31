@@ -1,9 +1,26 @@
-import React from 'react'
+"use client"
+import { useState, CSSProperties } from "react";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
-const loading = () => {
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  width: "100px",
+  borderColor: "#0284C7",
+};
+
+
+const Loading = () => {
+  let [loading, setLoading] = useState(true);
   return (
-    <div>Loading...</div>
+    <ClimbingBoxLoader
+      loading={loading}
+      cssOverride={override}
+      size={20}
+      color="#0284C7"
+    />
   )
 }
 
-export default loading
+export default Loading

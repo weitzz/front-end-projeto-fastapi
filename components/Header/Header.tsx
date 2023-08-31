@@ -1,10 +1,11 @@
 'use client'
 import Link from "next/link";
 import { useState } from "react";
+import { FiPlusCircle } from "react-icons/fi";
 
 const Header = () => {
     const [active, setActive] = useState(false);
-   
+
     const onClick = () => {
         setActive(!active);
     };
@@ -32,12 +33,13 @@ const Header = () => {
                                 </Link>
                             </li>
 
-                            <li className="list-none md:mr-2">
+                            <li className="list-none md:mr-2 ">
                                 <Link
-                                    href="/criar"
+                                    href="/cadastrar"
                                     className="flex w-full text-neutral-100 font-bold  hover:text-[#fff]  cursor-pointerpt-2.5 px-2.5"
                                 >
-                                    Adicionar 
+                                    Adicionar
+                                    <FiPlusCircle />
                                 </Link>
                             </li>
                         </ul>

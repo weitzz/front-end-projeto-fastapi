@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images:{
-        domains :['https://pixabay.com/','https://github.com', 'https://www.linkedin.com' ]
+    images: {
+        domains: ["localhost", 'http://localhost:8000/api/medicamentos/images/']
     }
 }
 

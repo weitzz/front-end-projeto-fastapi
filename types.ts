@@ -1,14 +1,20 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
+
 export type TMedicamento = {
     id?: number | string | undefined
     nome: string
-    preco: string
+    preco: string | number
     data_de_validade: string
-    imagem: string
+    estoque: boolean
+    quantidade: number
+    imagem: string | StaticImport
 }
 
 export type TMedicamentoPost = {
     nome: string
-    preco: string
+    preco: number | string
     data_de_validade: string
-    imagem: string
+    estoque: boolean
+    quantidade: number
+    imagem: string | StaticImport
 }
