@@ -11,6 +11,9 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 const Medicamento = ({ id, nome, preco, data_de_validade, estoque, quantidade, imagem }: TMedicamento) => {
   const router = useRouter()
 
+  let novoValor = preco.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+
+
   const handleDelete = async (id: any) => {
     await deleteData(id)
     toast.error('🦄 Wow so easy!', {
@@ -29,7 +32,7 @@ const Medicamento = ({ id, nome, preco, data_de_validade, estoque, quantidade, i
       <tr key={id}>
         <td className="p-2 text-center ">{nome}</td>
         <td className="p-2 whitespace-nowrap text-center">
-          <div className="text-center font-medium text-green-500">R$ {preco}</div>
+          <div className="text-center font-medium text-green-500">{novoValor}</div>
         </td>
         <td className="p-2 text-center">{data_de_validade}</td>
         <td className="px-6 py-4 text-center">
@@ -49,7 +52,7 @@ const Medicamento = ({ id, nome, preco, data_de_validade, estoque, quantidade, i
           </span>
         </td>
         <td className="p-2 text-center items-center">
-          <Image src={imagem} alt={nome} width={60} height={60} priority={false} />
+          <Image src={imagem} alt={nome} width={60} height={60} loader={() => imagem} />
         </td>
         <td className="p-2 text-center flex justify-center">
           <button
@@ -66,10 +69,7 @@ const Medicamento = ({ id, nome, preco, data_de_validade, estoque, quantidade, i
           </button>
         </td>
       </tr>
-
-
     </>
-
   )
 }
 

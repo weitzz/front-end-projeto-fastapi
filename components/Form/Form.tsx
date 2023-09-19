@@ -63,6 +63,7 @@ const Form = ({ id, nome, preco, data_de_validade, imagem }: TMedicamento) => {
               alt={nome}
               width={80}
               height={80}
+              loader={() => imagem}
             />
           )}
         </div>

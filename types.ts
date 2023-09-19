@@ -7,7 +7,7 @@ export type TMedicamento = {
     data_de_validade: string
     estoque: boolean
     quantidade: number
-    imagem: string | StaticImport
+    imagem: string
 }
 
 export type TMedicamentoPost = {
@@ -16,5 +16,5 @@ export type TMedicamentoPost = {
     data_de_validade: string
     estoque: boolean
     quantidade: number
-    imagem: string | StaticImport
+    imagem: string
 }
