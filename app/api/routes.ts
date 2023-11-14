@@ -42,10 +42,6 @@ export async function getDataAll() {
 export async function postData(medicamento: TMedicamento) {
   const res = await fetch(apiBaseUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: JSON.stringify(medicamento)
   });
 
   if (res.ok) {

@@ -4,8 +4,8 @@ import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 
 const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
+  display: "flex",
+  margin: "10% auto",
   width: "100px",
   borderColor: "#0284C7",
 };
@@ -17,7 +17,7 @@ const Loading = () => {
     <ClimbingBoxLoader
       loading={loading}
       cssOverride={override}
-      size={20}
+      size={60}
       color="#0284C7"
     />
   )

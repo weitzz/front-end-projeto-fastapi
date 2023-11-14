@@ -1,80 +1,95 @@
-"use-client"
-import { editData } from '@/app/api/routes'
-import { useForm } from "react-hook-form"
-import { TMedicamento } from '@/types'
-import Input from '../Input/Input';
-import Title from '../Title/Title';
-import InputSubmit from '../InputSubmit/InputSubmit'
-import BackButton from '../BackButton/BackButton';
-import Image from 'next/image';
+"use-client";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { TMedicamento } from "@/types";
+import Input from "../Input/Input";
+import Image from "next/image";
+import router from "next/router";
+import UploadImage from "../FileInput/fileInput";
 
-const Form = ({ id, nome, preco, data_de_validade, imagem }: TMedicamento) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<TMedicamento>({
-    mode: 'onBlur',
-    defaultValues: {
-      nome: nome,
-      preco: preco,
-      data_de_validade: data_de_validade,
-      imagem: imagem
-    }
-
-  })
-  const onSubmit = (data: TMedicamento) => {
-    console.log(data)
-    editData(data)
-  }
-
-
-
-  return (
-    <form className='w-full max-w-lg' onSubmit={handleSubmit(onSubmit)}>
-      <Title text='Medicamentos' />
-      <div className="flex flex-wrap -mx-3 mb-6 py-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
-          <Input {...register("nome")} defaultValue={nome} />
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <Input {...register("preco")} defaultValue={preco} />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-2">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <Input {...register("data_de_validade")} type='data' defaultValue={data_de_validade} />
-        </div>
-
-        <div className="flex w-full items-center justify-center bg-grey-lighter">
-          <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
-            <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-            </svg>
-            <span className="mt-2 text-base leading-normal">Select a file</span>
-            <input type='file' className="hidden" />
-          </label>
-          {watch('imagem') && (
-            <Image
-              src={imagem}
-              alt={nome}
-              width={80}
-              height={80}
-              loader={() => imagem}
-            />
-          )}
-        </div>
-
-      </div>
-      <div className='w-full  mt-6 flex justify-between'>
-        <InputSubmit />
-        <BackButton />
-      </div>
-    </form>
-  )
+interface FormProps {
+  defaultValues?: TMedicamento;
+  onSubmit: SubmitHandler<TMedicamento>;
 }
 
-export default Form
+const Form = ({ defaultValues, onSubmit }: FormProps) => {
+  const { register, handleSubmit, watch, reset, setValue } =
+    useForm<TMedicamento>();
+  const handleFormSubmit: SubmitHandler<TMedicamento> = (
+    data: TMedicamento
+  ) => {
+    onSubmit(data);
+    reset();
+  };
+
+  return (
+    <form className="w-full max-w-lg" onSubmit={handleSubmit(handleFormSubmit)}>
+      <div className="flex flex-wrap -mx-3  py-6">
+        <div className="w-full md:w-1/2 px-3 md:mb-0 ">
+          <label className="text-gray-500">Nome do medicamento</label>
+          <Input {...register("nome")} name="nome" />
+        </div>
+        <div className="w-full md:w-1/2 px-3">
+          <label className="text-gray-500">Preço</label>
+          <Input
+            {...register("preco")}
+            name="preco"
+            placeholder="R$"
+            type="number"
+          />
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-2">
+        <div className="w-full md:w-1/2 px-3 md:mb-0 ">
+          <label className="text-gray-500">Validade</label>
+          <Input
+            {...register("data_de_validade")}
+            type="date"
+            name="data_de_validade"
+          />
+        </div>
+        <div className="w-full md:w-1/2 px-3 ">
+          <label className="text-gray-500">Estoque</label>
+          <input
+            id="default-checkbox"
+            type="checkbox"
+            {...register("estoque")}
+            checked={watch("estoque") as boolean}
+            onChange={(e) => {
+              setValue("estoque", e.target.checked); // Use setValue para atualizar o valor do campo
+            }}
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-2">
+        <div className="w-full md:w-1/2 px-3 md:mb-0">
+          <label className="text-gray-500">Quantidade</label>
+          <Input {...register("quantidade")} name="quantidade" type="number" />
+        </div>
+      </div>
+      {/* <UploadImage
+        onChange={(e: any) => {
+          setValue("imagem", e.target.files[0]);
+        }}
+      /> */}
+      <div className="w-full  mt-6 flex justify-between">
+        <button
+          type="button"
+          onClick={() => router.push("/")}
+          className="block px-6 py-2.5 bg-sky-600 text-neutral-100 font-medium text-xs leading-tight  rounded-full shadow-md hover:bg-sky-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Voltar
+        </button>
+        <button
+          type="submit"
+          className="block cursor-pointer  px-6 py-2.5 bg-green-600 text-neutral-100 font-medium text-xs leading-tight rounded-full shadow-md hover:bg-green-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Salvar
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default Form;

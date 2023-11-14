@@ -6,7 +6,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement>
 
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ name = '', type = 'text', ...props }, ref) => {
+  ({ name = '', type = '', ...props }, ref) => {
 
     return (
       <>
@@ -15,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           type={type}
           {...props}
-          className="appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-100 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" />
+          className="appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-100 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
       </>
     )
   }
