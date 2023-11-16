@@ -1,26 +1,14 @@
-"use client"
+"use client";
 import { useState, CSSProperties } from "react";
-import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
-
-
-const override: CSSProperties = {
-  display: "flex",
-  margin: "10% auto",
-  width: "100px",
-  borderColor: "#0284C7",
-};
-
+import BarLoader from "react-spinners/BarLoader";
 
 const Loading = () => {
   let [loading, setLoading] = useState(true);
   return (
-    <ClimbingBoxLoader
-      loading={loading}
-      cssOverride={override}
-      size={60}
-      color="#0284C7"
-    />
-  )
-}
+    <div className="flex items-center justify-center h-screen">
+      <BarLoader loading={loading} color="#16a34a" width={100} height={5} />
+    </div>
+  );
+};
 
-export default Loading
+export default Loading;

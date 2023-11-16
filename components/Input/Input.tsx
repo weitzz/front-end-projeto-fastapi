@@ -1,13 +1,11 @@
-"use-client"
+"use-client";
 
-import { InputHTMLAttributes, forwardRef } from "react"
+import { InputHTMLAttributes, forwardRef } from "react";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>
-
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ name = '', type = '', ...props }, ref) => {
-
+  ({ name = "", type = "", ...props }, ref) => {
     return (
       <>
         <input
@@ -15,10 +13,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           type={type}
           {...props}
-          className="appearance-none block w-full bg-gray-100 text-gray-500 border border-gray-100 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+          className="  text-gray-500  rounded outline-none"
+        />
       </>
-    )
+    );
   }
-)
+);
 
-export default Input
+export default Input;

@@ -1,7 +1,5 @@
 "use client";
-import BackButton from "@/components/BackButton/BackButton";
 import Input from "@/components/Input/Input";
-import InputSubmit from "@/components/InputSubmit/InputSubmit";
 import Title from "@/components/Title/Title";
 import { TMedicamentoPost } from "@/types";
 import { useForm, SubmitHandler, Controller, Form } from "react-hook-form";
@@ -10,7 +8,8 @@ import Checkbox from "@/components/Checkbox/Checkbox";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { postData } from "../api/routes";
-import { json } from "stream/consumers";
+import Button from "@/components/Button/Button";
+import router from "next/router";
 
 const CadastrarMedicamento = () => {
   const {
@@ -172,8 +171,20 @@ const CadastrarMedicamento = () => {
         </div>
 
         <div className="w-full  mt-6 flex justify-between">
-          <BackButton />
-          <InputSubmit />
+          <Button
+            type="button"
+            className="block px-6 py-2.5 bg-sky-600 text-neutral-100 font-medium text-xs leading-tight  rounded-full shadow-md hover:bg-sky-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
+            onClick={() => router.push("/")}
+          >
+            Voltar
+          </Button>
+          <Button
+            type="submit"
+            className="block cursor-pointer px-6 py-2.5 bg-green-600 text-neutral-100 font-medium text-xs leading-tight rounded-full shadow-md hover:bg-green-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
+            onClick={() => router.push("/")}
+          >
+            Cadastrar
+          </Button>
         </div>
       </form>
     </div>
