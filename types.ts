@@ -1,4 +1,3 @@
-import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 export type TMedicamento = {
     id?: number 
@@ -20,6 +19,12 @@ export type TMedicamentoPost = {
 }
 
 export type LoginForm = {
+    email: string,
+    password: string
+}
+
+export type RegisterForm = {
+    nome: string,
     email: string,
     password: string
 }
