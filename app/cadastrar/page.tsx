@@ -7,11 +7,13 @@ import Image from "next/image";
 import Checkbox from "@/components/Checkbox/Checkbox";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
-import { postData } from "../api/routes";
 import Button from "@/components/Button/Button";
-import router from "next/router";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import FileInput from "@/components/FileInput/FileInput";
 
 const CadastrarMedicamento = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     reset,
@@ -60,7 +62,7 @@ const CadastrarMedicamento = () => {
   };
 
   return (
-    <div className="flex justify-center py-8 h-screen ">
+    <div className="flex justify-center py-8 h-auto">
       <form className="w-full max-w-lg" onSubmit={handleSubmit(onSubmit)}>
         <Title text="Adicionar novo medicamento" />
         <div className="flex flex-wrap -mx-3  py-6">
@@ -71,7 +73,7 @@ const CadastrarMedicamento = () => {
             render={({ field }) => (
               <div className="w-full md:w-1/2 px-3 md:mb-0 ">
                 <label className="text-gray-500">Nome do medicamento</label>
-                <Input {...field} />
+                {/* <Input {...field} /> */}
               </div>
             )}
           />
@@ -82,7 +84,7 @@ const CadastrarMedicamento = () => {
             render={({ field }) => (
               <div className="w-full md:w-1/2 px-3">
                 <label className="text-gray-500">Preço</label>
-                <Input {...field} placeholder="0.00" />
+                {/* <Input {...field} placeholder="0.00" /> */}
               </div>
             )}
           />
@@ -94,8 +96,8 @@ const CadastrarMedicamento = () => {
             defaultValue={""}
             render={({ field }) => (
               <div className="w-full md:w-1/2 px-3 md:mb-0">
-                <label className="text-gray-500">Validade</label>
-                <Input {...field} type="date" />
+                <label className="text-gray-500">Validade </label>
+                {/* <Input {...field} type="date" /> */}
               </div>
             )}
           />
@@ -108,80 +110,29 @@ const CadastrarMedicamento = () => {
             render={({ field }) => (
               <div className="w-full md:w-1/2 px-3 md:mb-0">
                 <label className="text-gray-500">Quantidade</label>
-                <Input {...field} />
+                {/* <Input {...field} /> */}
               </div>
             )}
           />
         </div>
         <Checkbox name="estoque" control={control} defaultValue={false} />
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3 md:mb-0">
-            <div className="flex items-center justify-center w-full">
-              <label
-                htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-200 border-dashed rounded-lg cursor-pointer "
-              >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg
-                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 16"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                    />
-                  </svg>
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Upload de imagem</span> or
-                    drag and drop
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    SVG, PNG ou JPG (MAX. 800x400px)
-                  </p>
-                </div>
-              </label>
-            </div>
-            <input
-              name="imagem"
-              type="file"
-              id="dropzone-file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImgChange}
-            />
-          </div>
-          <div className="flex items-center justify-center w-full pt-6">
-            {file && (
-              <Image
-                src={URL.createObjectURL(file)}
-                alt="Imagem selecionada"
-                width="350"
-                height="350"
-                layout="rounded"
-                style={{ maxHeight: "100%", maxWidth: "100%" }}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="w-full  mt-6 flex justify-between">
+        {/* <FileInput file={file} handleImgChange={() => handleImgChange} /> */}
+        <div className="w-full mt-6 flex justify-between">
           <Button
             type="button"
-            className="block px-6 py-2.5 bg-sky-600 text-neutral-100 font-medium text-xs leading-tight  rounded-full shadow-md hover:bg-sky-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
             onClick={() => router.push("/")}
+            className="border-2 w-52 border-white bg-gray-600
+                    text-neutral-100 rounded-lg px-12 py-2 flex flex-row items-center
+                    justify-center font-semibold hover:bg-white hover:text-gray-600 hover:border-2 hover:border-gray-600 transition duration-150 ease-in-out"
           >
             Voltar
           </Button>
           <Button
             type="submit"
-            className="block cursor-pointer px-6 py-2.5 bg-green-600 text-neutral-100 font-medium text-xs leading-tight rounded-full shadow-md hover:bg-green-400 hover:shadow-lg focus:bg-sky-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-400 active:shadow-lg transition duration-150 ease-in-out"
-            onClick={() => router.push("/")}
+            onClick={() => console.log("clicou")}
+            className="border-2 w-52 border-white bg-green-600
+                    text-neutral-100 rounded-lg px-12 py-2 flex flex-row items-center
+                    justify-center font-semibold hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600 transition duration-150 ease-in-out"
           >
             Cadastrar
           </Button>

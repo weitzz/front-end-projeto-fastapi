@@ -1,25 +1,27 @@
-import { TMedicamento } from '@/types';
+import { TMedicamento, TMedicamentoPost } from '@/types';
+import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 // import { toast } from 'react-toastify';
 //http://localhost:3002/api/medicamentos
 //http://localhost:3004/medicamentos
 const apiBaseUrl = 'http://localhost:8000/api/medicamentos/';
 
-async function getData(id: number) {
-  const response = await fetch(apiBaseUrl, { cache: 'no-store' });
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
+// async function getData(id: number) {
+//   const response = await fetch(apiBaseUrl, { cache: 'no-store' });
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data');
+//   }
 
-  const data = await response.json(); // Converter a resposta em JSON
+//   const data = await response.json(); // Converter a resposta em JSON
 
-  const medicamento = data.find(
-    (item: TMedicamento) => item.id === `${apiBaseUrl}${id}`,
-  );
+//   const medicamento = data.find(
+//     (item: TMedicamento) => item.id === `${apiBaseUrl}${id}`,
+//   );
 
-  return medicamento; // Retornar o medicamento encontrado
-}
+//   return medicamento; // Retornar o medicamento encontrado
+// }
 
-export default getData
+// export default getData
 
 
 export async function getDataAll() {
@@ -38,18 +40,33 @@ export async function getDataAll() {
 }
 
 
+export async function postData(medicamento: FormData) {
 
-export async function postData(medicamento: TMedicamento) {
-  const res = await fetch(apiBaseUrl, {
-    method: 'POST',
-  });
-
+  try {
+     const res = await fetch(apiBaseUrl, {
+       method: 'POST',
+       body: medicamento,
+     });
+    
   if (res.ok) {
     const newMedicamento = await res.json()
     return newMedicamento
   } else {
     console.error('Erro ao cadastrar medicamento');
   }
+    
+  } catch (error:any) {
+    if (error.response && error.response.data) {
+        console.error("Erro ao cadastrar o medicamento:", error.response.data);
+        alert(
+          "Erro ao cadastrar o medicamento: " + error.response.data.message
+        );
+      } else {
+        console.error("Erro ao cadastrar o medicamento:", error);
+        alert("Erro ao cadastrar o medicamento. Tente novamente mais tarde.");
+      }
+  }
+  
 }
 
 

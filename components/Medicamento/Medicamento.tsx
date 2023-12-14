@@ -18,15 +18,10 @@ const Medicamento = ({
 }: TMedicamento) => {
   const router = useRouter();
 
-  let novoValor = preco.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL",
-  });
-
   const handleDelete = async (id: any) => {
     await deleteData(id);
-    toast.error("🦄 Wow so easy!", {
-      position: "top-right",
+    toast("Excluido", {
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -35,6 +30,7 @@ const Medicamento = ({
       progress: undefined,
       theme: "colored",
     });
+    router.refresh();
   };
   return (
     <>
@@ -42,7 +38,7 @@ const Medicamento = ({
         <td className="p-2 text-center ">{nome}</td>
         <td className="p-2 whitespace-nowrap text-center">
           <div className="text-center font-medium text-green-500">
-            {novoValor}
+            R${preco.toLocaleString()}
           </div>
         </td>
         <td className="p-2 text-center">{data_de_validade}</td>
@@ -65,14 +61,14 @@ const Medicamento = ({
         <td className="px-6 py-4 text-center">
           <span
             className={`inline-flex items-center gap-1 rounded-full ${
-              quantidade >= 100
+              Number(quantidade) >= 100
                 ? "bg-green-50 text-green-600"
                 : " text-red-600 bg-red-50"
             }  px-2 py-1 text-xs font-semibold`}
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
-                quantidade >= 100 ? "bg-green-600" : "bg-red-600"
+                Number(quantidade) >= 100 ? "bg-green-600" : "bg-red-600"
               }`}
             ></span>
             {quantidade ? quantidade : "0"}
@@ -84,7 +80,7 @@ const Medicamento = ({
             alt={nome}
             width={60}
             height={60}
-            loader={() => imagem}
+            // loader={() => imagem}
           />
         </td>
         <td className="p-2  flex justify-center items-center">
