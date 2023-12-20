@@ -15,6 +15,6 @@ Rode ```npm start``` na pasta raiz. Acesse via **localhost:3000**.
 * NexJS 13
 * Typescript
 * Tailwind
-* NexthAuth
+* NextAuth
 
  <p align="center">Feito com ❤️ por <strong>Tatiane Weitzel<p>
