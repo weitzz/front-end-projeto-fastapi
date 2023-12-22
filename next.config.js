@@ -8,6 +8,10 @@ const nextConfig = {
                 hostname: 'localhost:8000/api/medicamentos',
                 pathname: '/images/**'
             },
+             {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com'
+            }
         ],
     }
 }
