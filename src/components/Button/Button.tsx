@@ -21,9 +21,11 @@ const Button = ({
   const buttonClass = twMerge(ColorVariant[variant], className);
 
   if (href) {
-    <Link href={href} className={buttonClass}>
-      {children}
-    </Link>;
+    return (
+      <Link href={href} className={buttonClass}>
+        {children}
+      </Link>
+    );
   }
   return (
     <button {...props} className={buttonClass}>

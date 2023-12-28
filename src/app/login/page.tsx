@@ -5,31 +5,25 @@ import Link from "next/link";
 import React from "react";
 import { FiLock, FiLogIn, FiMail } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { loginFormSchema } from "@/src/types/schemasForm";
-
+import { loginFormSchema } from "@/validations/schemasForm";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+
 const Login = () => {
   const router = useRouter();
 
-  const {
-    handleSubmit,
-    register,
-    setError,
-    formState: { errors },
-  } = useForm<FormProps>({
+  const methods = useForm<FormProps>({
     resolver: zodResolver(loginFormSchema),
   });
 
   type FormProps = z.infer<typeof loginFormSchema>;
-  console.log(errors);
 
-  const handleFormSubmit = async (data: FormProps) => {
-    console.log(data);
-
+  const onSubmit = methods.handleSubmit(async (data: FormProps) => {
     signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -37,12 +31,16 @@ const Login = () => {
       callbackUrl: "/medicamentos",
     }).then((res) => {
       if (res?.error) {
-        setError("email", { message: "Algo deu errado", type: "error" });
+        methods.setError("email", {
+          message: "Algo deu errado",
+          type: "error",
+        });
       } else {
-        router.push("/");
+        toast.success("Seja bem vindo");
+        router.push("/medicamentos");
       }
     });
-  };
+  });
 
   return (
     <>
@@ -52,44 +50,43 @@ const Login = () => {
         <p className="mb-10 text-neutral-400">
           Por favor, faça o login na sua conta
         </p>
-        <form
-          className="flex flex-col items-center w-full mb-3"
-          onSubmit={handleSubmit(handleFormSubmit)}
-        >
-          <Input
-            name="email"
-            placeholder="Email"
-            type="email"
-            inputIcon={<FiMail />}
-            disabled={false}
-            register={register}
-            error={errors.email?.message}
-          />
+        <FormProvider {...methods}>
+          <div className="flex flex-col items-center w-full mb-3">
+            <Input
+              name="email"
+              placeholder="Email"
+              type="email"
+              inputIcon={<FiMail />}
+              disabled={false}
+              control={methods.control}
+              error={methods.formState.errors.email?.message}
+            />
 
-          <Input
-            name="password"
-            placeholder="Senha"
-            type="password"
-            inputIcon={<FiLock />}
-            disabled={false}
-            register={register}
-            error={errors.password?.message}
-          />
+            <Input
+              name="password"
+              placeholder="Senha"
+              type="password"
+              inputIcon={<FiLock />}
+              disabled={false}
+              control={methods.control}
+              error={methods.formState.errors.password?.message}
+            />
 
-          <Button type="submit" variant="primary" className="w-80">
-            <FiLogIn className="m-1" /> Entrar
-          </Button>
-        </form>
+            <Button
+              variant="primary"
+              className="w-80"
+              onClick={() => onSubmit()}
+            >
+              <FiLogIn className="m-1" /> Entrar
+            </Button>
+          </div>
+        </FormProvider>
         <div className="text-green-600 text-sm text-right mr-24">
           <Link href="/esqueceu-senha">Esqueceu a senha?</Link>
         </div>
         <div className="border w-full border-gray-100 inline-block mb-2 "></div>
         <div className="flex flex-col items-center">
-          <Button
-            variant="primary"
-            href="/conta-google"
-            onClick={() => signIn("google")}
-          >
+          <Button variant="primary" onClick={() => signIn("google")}>
             <FcGoogle className="m-1" />
             Entrar com a conta Google
           </Button>
@@ -103,7 +100,7 @@ const Login = () => {
         <div className="border-2 w-10 border-white inline-block mb-2 "></div>
         <p className="mb-10 text-neutral-200">É rápido e fácil!</p>
         <div className="flex items-center justify-center">
-          <Button variant="default" href={"/register"} className="w-72 ">
+          <Button href="/register" variant="default" className="w-72 ">
             <FiLogIn className="m-1" /> Criar conta
           </Button>
         </div>

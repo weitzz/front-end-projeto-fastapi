@@ -1,34 +1,21 @@
-import React, { ChangeEvent, useRef } from "react";
+"use-client";
+import React from "react";
 import Image from "next/image";
-import {
-  UseControllerProps,
-  useController,
-  Controller,
-  Control,
-  UseFormRegister,
-  RegisterOptions,
-} from "react-hook-form";
+import { Control, Controller, useForm, useWatch } from "react-hook-form";
 
 interface FileInputProps {
-  file: any;
   name: string;
   control: Control;
-  handleImgChange: any;
 }
 
-const FileInput = ({
-  name,
-  file,
-  control,
-  handleImgChange,
-  ...rest
-}: FileInputProps) => {
+const FileInput = ({ name, control }: FileInputProps) => {
+  const { watch } = useForm();
   return (
     <Controller
-      name="imagem"
+      name={name}
       control={control}
-      defaultValue=""
-      render={({ field }) => (
+      defaultValue={undefined}
+      render={({ field, fieldState }) => (
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3 md:mb-0">
             <div className="flex items-center justify-center w-full">
@@ -63,27 +50,38 @@ const FileInput = ({
               </label>
             </div>
             <input
+              id="dropzone-file"
               {...field}
               type="file"
-              id="dropzone-file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => {
-                field.onChange(e);
-                handleImgChange(e);
-              }}
             />
           </div>
           <div className="flex items-center justify-center w-full pt-6">
-            {field.value && (
+            {/* {field.value && field.value[0] instanceof File && (
               <Image
                 src={URL.createObjectURL(field.value[0])}
                 alt="Imagem selecionada"
                 width="350"
                 height="350"
               />
+            )} */}
+
+            {watch(name) && watch(name)[0] instanceof File && (
+              <Image
+                src={URL.createObjectURL(watch(name)[0])}
+                alt="Imagem selecionada"
+                width={200}
+                height={200}
+                layout="fill"
+              />
             )}
           </div>
+          {fieldState.error && (
+            <p className="text-red-500 text-xs mt-1">
+              {fieldState.error.message}
+            </p>
+          )}
         </div>
       )}
     />

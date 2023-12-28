@@ -63,14 +63,17 @@ export async function postData(medicamento: FormData) {
   }
 }
 
-export async function editData(medicamento: TMedicamento) {
-  const res = await fetch(`${apiBaseUrl}${medicamento.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ ...medicamento }),
-  });
+export async function editData(medicamento: any) {
+  const res = await fetch(
+    `http://localhost:8000/api/medicamentos/${medicamento.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...medicamento }),
+    }
+  );
   if (res.ok) {
     const updateMedicamento = res.json();
     return updateMedicamento;
@@ -80,14 +83,14 @@ export async function editData(medicamento: TMedicamento) {
 }
 
 export async function getId(id: string) {
-  const res = await fetch(`${apiBaseUrl}${id}`, {
+  const res = await fetch(`http://localhost:8000/api/medicamentos/${id}`, {
     cache: "no-store",
   });
   return (await res.json()) as TMedicamento;
 }
 
 export async function deleteData(id: string) {
-  await fetch(`${apiBaseUrl}${id}`, {
+  await fetch(`${apiBaseUrl}/${id}`, {
     method: "DELETE",
   });
 }

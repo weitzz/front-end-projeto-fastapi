@@ -5,10 +5,7 @@ export const loginFormSchema = z
       .string()
       .min(1, { message: "O Email é obrigatório" })
       .email("Email inválido"),
-    password: z
-      .string()
-      .min(8, { message: "Mínimo de 8 letras" })
-      .max(20, { message: "Máximo de 20 letras" }),
+    password: z.string().min(1, { message: 'Senha é obrigatório' }),
   })
   .required();
 
