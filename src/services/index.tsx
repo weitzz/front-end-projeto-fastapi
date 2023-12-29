@@ -41,7 +41,7 @@ export async function getDataAll() {
 
 export async function postData(medicamento: FormData) {
   try {
-    const res = await fetch(apiBaseUrl, {
+    const res = await fetch("http://localhost:8000/api/medicamentos/", {
       method: "POST",
       body: medicamento,
     });

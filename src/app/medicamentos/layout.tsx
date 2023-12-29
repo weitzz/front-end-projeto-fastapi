@@ -9,7 +9,6 @@ export default function DashboardLayout({
   return (
     <section className="flex h-screen overflow-hidden">
       <Sidebar />
-
       <div className=" bg-gray-100 relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         <Header />
         <main>

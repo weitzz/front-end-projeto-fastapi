@@ -8,8 +8,9 @@ import Checkbox from "../Checkbox/Checkbox";
 import Button from "../Button/Button";
 import DatePickerInput from "../DataPicker/DataPicker";
 import FileInput from "../FileInput/FileInput";
+import { toast } from "react-toastify";
 interface FormPostProps {
-  submit: SubmitHandler<TMedicamentoPost>;
+  submit?: SubmitHandler<TMedicamentoPost>;
   edit: boolean;
   initialValue?: TMedicamentoPost;
 }
@@ -19,26 +20,6 @@ const FormPost = ({ submit, edit, initialValue }: FormPostProps) => {
     mode: "all",
   });
   const [file, setFile] = useState<File>();
-
-  // const onSubmit: SubmitHandler<TMedicamentoPost> = async (data) => {
-  //   if (!file) return;
-  //   const formData = new FormData();
-  //   formData.append("imagem", file);
-  //   formData.append("nome", data.nome);
-  //   formData.append("preco", data.preco);
-  //   formData.append("data_de_validade", data.data_de_validade);
-  //   formData.append("quantidade", data.quantidade);
-  //   formData.append("estoque", data.estoque?.toString());
-
-  //   console.log("file", file);
-  //   const save = await postData(formData);
-
-  //   if (save) {
-  //     methods.reset();
-  //   } else {
-  //     alert("Erro ao cadastrar o medicamento. Tente novamente mais tarde.");
-  //   }
-  // };
 
   const onSubmit = methods.handleSubmit(async (data: TMedicamentoPost) => {
     if (!file) return;
@@ -51,18 +32,24 @@ const FormPost = ({ submit, edit, initialValue }: FormPostProps) => {
     formData.append("estoque", data.estoque?.toString());
 
     console.log("file", file);
+    console.log(data.data_de_validade);
     const save = await postData(formData);
 
     if (save) {
+      toast.success("Cadastrado com sucesso");
       methods.reset();
     } else {
       alert("Erro ao cadastrar o medicamento. Tente novamente mais tarde.");
+      toast.error(
+        "Erro ao cadastrar o medicamento. Tente novamente mais tarde."
+      );
     }
   });
-  const handleImgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) await setFile(e.target.files[0]);
-    methods.reset();
+  const handleImgChange = async (file: File | null) => {
+    console.log("Arquivo selecionado:", file);
+    if (file) await setFile(file);
   };
+
   return (
     <FormProvider {...methods}>
       <div className="flex flex-wrap mx-3  py-6">
@@ -111,9 +98,14 @@ const FormPost = ({ submit, edit, initialValue }: FormPostProps) => {
           control={methods.control}
         />
       </div>
-      <FileInput name="imagem" control={methods.control} />
+      <FileInput
+        name="imagem"
+        control={methods.control}
+        onFileChange={handleImgChange}
+      />
+
       <Button
-        onClick={() => onSubmit}
+        onClick={onSubmit}
         className="border-2 w-52 border-white bg-green-600
                     text-neutral-100 rounded-lg px-12 py-2 flex flex-row items-center
                     justify-center font-semibold hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600 transition duration-150 ease-in-out"

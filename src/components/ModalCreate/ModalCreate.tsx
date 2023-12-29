@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import Title from "../Title/Title";
 import Button from "../Button/Button";
-import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "../Input/Input";
 
-import Image from "next/image";
-import Checkbox from "../Checkbox/Checkbox";
-import { useRouter } from "next/navigation";
-
-import { TMedicamentoPost } from "@/src/types/types";
-import { postData } from "@/src/services";
 import FormPost from "../FormPost/FormPost";
 
 interface ModalProps {
@@ -18,39 +10,6 @@ interface ModalProps {
 }
 
 const Modal = ({ show, setShow }: ModalProps) => {
-  const {
-    handleSubmit,
-    reset,
-    register,
-    control,
-    formState: { errors },
-  } = useForm<TMedicamentoPost | any>({
-    defaultValues: {},
-    mode: "all",
-  });
-  const [file, setFile] = useState<File>();
-  const router = useRouter();
-
-  const onSubmit: SubmitHandler<TMedicamentoPost> = async (data) => {
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("imagem", file);
-    formData.append("nome", data.nome);
-    formData.append("preco", data.preco);
-    formData.append("data_de_validade", data.data_de_validade);
-    formData.append("quantidade", data.quantidade);
-    formData.append("estoque", data.estoque?.toString());
-
-    const save = await postData(formData);
-
-    if (save) {
-      reset();
-      router.refresh();
-    } else {
-      alert("Erro ao cadastrar o medicamento. Tente novamente mais tarde.");
-    }
-  };
-
   return (
     <>
       {show ? (
@@ -62,7 +21,7 @@ const Modal = ({ show, setShow }: ModalProps) => {
                   <Title text="Adicionar novo medicamento" />
                 </div>
                 <div className="relative p-5 flex-auto flex flex-col gap-5">
-                  <FormPost submit={onSubmit} edit={false} />
+                  <FormPost edit={false} />
 
                   <div className="flex gap-2 items-center justify-end p-6 border-t border-solid rounded-b">
                     <Button
