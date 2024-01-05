@@ -1,7 +1,5 @@
-"use client";
-import { postData } from "@/src/services";
 import { TMedicamentoPost } from "@/src/types/types";
-import React, { useState } from "react";
+import React from "react";
 import {
   Control,
   FieldValues,
@@ -22,38 +20,10 @@ interface FormPostProps {
 }
 
 const FormPost = ({ initialValue, onSubmit }: FormPostProps) => {
+  console.log("formpost");
   const methods: UseFormReturn<TMedicamentoPost> = useForm({
     defaultValues: initialValue,
   });
-  const [file, setFile] = useState<File>();
-
-  // const onSubmit = methods.handleSubmit(async (data: TMedicamentoPost) => {
-  //   if (!file) return;
-  //   const formData = new FormData();
-  //   formData.append("imagem", file);
-  //   formData.append("nome", data.nome);
-  //   formData.append("preco", data.preco);
-  //   formData.append("data_de_validade", data.data_de_validade);
-  //   formData.append("quantidade", data.quantidade);
-  //   formData.append("estoque", data.estoque?.toString());
-
-  //   console.log("data", data);
-  //   const save = await postData(formData);
-
-  //   if (save) {
-  //     toast.success("Cadastrado com sucesso");
-  //     methods.reset();
-  //   } else {
-  //     alert("Erro ao cadastrar o medicamento. Tente novamente mais tarde.");
-  //     toast.error(
-  //       "Erro ao cadastrar o medicamento. Tente novamente mais tarde."
-  //     );
-  //   }
-  // });
-  const handleImgChange = async (file: File | null) => {
-    console.log("Arquivo selecionado:", file);
-    if (file) await setFile(file);
-  };
 
   return (
     <FormProvider {...methods}>
@@ -125,8 +95,3 @@ const FormPost = ({ initialValue, onSubmit }: FormPostProps) => {
 };
 
 export default FormPost;
-function useFormReturn<T>(arg0: {
-  defaultValues: TMedicamentoPost | undefined;
-}) {
-  throw new Error("Function not implemented.");
-}

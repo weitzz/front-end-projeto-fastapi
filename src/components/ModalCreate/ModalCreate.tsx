@@ -10,9 +10,15 @@ interface ModalProps {
   show: boolean;
   setShow: () => void;
 }
-const submit = (data: TMedicamento) => {
-  console.log(data);
-  toast.success("foi");
+
+const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
+
+const submit = async (data: TMedicamento) => {
+  await toast.promise(resolveAfter3Sec, {
+    pending: "Promise is pending",
+    success: "Promise resolved 👌",
+    error: "Promise rejected 🤯",
+  });
 };
 
 const Modal = ({ show, setShow }: ModalProps) => {

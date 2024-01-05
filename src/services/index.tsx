@@ -24,7 +24,7 @@ const apiBaseUrl: any = `${process.env.NEXT_API_URL}medicamentos/`;
 
 export async function getDataAll() {
   try {
-    const response = await fetch(apiBaseUrl, {
+    const response = await fetch("http://localhost:8000/api/medicamentos/", {
       cache: "no-store",
       method: "GET",
     });
@@ -75,7 +75,7 @@ export async function editData(medicamento: any) {
     }
   );
   if (res.ok) {
-    const updateMedicamento = res.json();
+    const updateMedicamento = await res.json();
     return updateMedicamento;
   } else {
     console.error("Erro ao editar medicamento");
@@ -83,12 +83,21 @@ export async function editData(medicamento: any) {
 }
 
 export async function getId(id: string) {
-  const res = await fetch(`http://localhost:8000/api/medicamentos/${id}`, {
-    cache: "no-store",
-  });
-  return (await res.json()) as TMedicamento;
-}
+  try {
+    const res = await fetch(`http://localhost:8000/api/medicamentos/${id}`, {
+      cache: "no-store",
+    });
 
+    if (!res.ok) {
+      throw new Error("Erro ao obter dados do medicamento");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Erro na solicitação de ID:", error);
+    throw error;
+  }
+}
 export async function deleteData(id: string) {
   await fetch(`http://localhost:8000/api/medicamentos/${id}`, {
     method: "DELETE",

@@ -21,7 +21,6 @@ const UploadImage = ({ control, medicamento }: UploadImageProps) => {
     medicamento ? medicamento.imagem : null
   );
 
-  //tentar substituir o state por useWatch do hook-form
   useEffect(() => {
     return () => {
       if (imagePreview) URL.revokeObjectURL(imagePreview);

@@ -19,8 +19,8 @@ export default async function MedicamentoDetails({ params }: PageProps) {
 
   console.log(medicamento);
 
-  const onSubmit = async (data: TMedicamento) => {
-    await console.log("editar", data);
+  const onSubmit = (data: TMedicamento) => {
+    console.log("editar", data);
     toast.success("foi");
   };
 
