@@ -30,7 +30,7 @@ const SignInButton = () => {
           )}
           <Button
             variant="primary"
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <LuArrowRightSquare className="m-1" />
             Sair
@@ -40,7 +40,7 @@ const SignInButton = () => {
         <div className="hidden sm:flex justify-center items-center gap-2">
           <Button
             variant="primary"
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => signOut({ callbackUrl: "/login" })}
           >
             Entrar
           </Button>

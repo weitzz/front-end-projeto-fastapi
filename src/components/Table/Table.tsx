@@ -18,6 +18,7 @@ const tableList = [
 
 const Table = async () => {
   const data = await getDataAll();
+
   return (
     <table className=" w-full h-auto mt-8">
       <thead className="">

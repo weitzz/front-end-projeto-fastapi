@@ -31,18 +31,6 @@ const Header = () => {
           >
             <ul className="md:flex-row md:flex flex-row items-center justify-center">
               <SignInButton />
-              {/* <li className="list-none md:mr-2 text-gray-600 font-semibold">
-                Olá,usuario
-              </li>
-              <li
-                className="list-none md:mr-2 flex  cursor-pointer
-               border-2 w-auto border-white bg-green-600
-                    text-neutral-100 rounded-lg px-12 py-2  flex-row items-center
-                    justify-center font-semibold hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600 transition duration-150 ease-in-out"
-              >
-                <Link href="/login">Sair</Link>
-                <LuArrowRightSquare className="m-1" />
-              </li> */}
             </ul>
           </nav>
         </div>

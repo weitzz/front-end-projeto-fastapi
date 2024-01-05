@@ -1,5 +1,6 @@
 import Header from "@/src/components/Header/Header";
 import Sidebar from "@/src/components/Sidebar/Sidebar";
+import { ToastContainer } from "react-toastify";
 
 export default function DashboardLayout({
   children,
@@ -9,7 +10,6 @@ export default function DashboardLayout({
   return (
     <section className="flex h-screen overflow-hidden">
       <Sidebar />
-
       <div className=" bg-gray-100 relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         <Header />
         <main>

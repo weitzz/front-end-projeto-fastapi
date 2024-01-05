@@ -2,33 +2,37 @@
 
 import FormPost from "@/src/components/FormPost/FormPost";
 import Title from "@/src/components/Title/Title";
+
 import { editData, getId } from "@/src/services";
 import { TMedicamento, TMedicamentoPost } from "@/src/types/types";
-import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { toast } from "react-toastify";
 
 interface PageProps {
   params: { id: string; nome: string };
   searchParams: string;
+  isEditing: boolean;
 }
 
 export default async function MedicamentoDetails({ params }: PageProps) {
-  const methods = useForm<TMedicamento | any>({
-    defaultValues: {},
-    mode: "all",
-  });
   const medicamento = await getId(params.id);
 
-  const onSubmit = methods.handleSubmit(async (data: TMedicamento) => {
-    editData(data);
-  });
+  console.log(medicamento);
+
+  const onSubmit = (data: TMedicamento) => {
+    console.log("editar", data);
+    toast.success("foi");
+  };
 
   return (
     <div className="grid gap-8 grid-cols-1 mb-8">
       <Title text="Editar" />
-      <FormPost
-        submit={() => onSubmit()}
-        edit={true}
-        initialValue={medicamento}
+      <FormPost initialValue={medicamento} onSubmit={onSubmit} />
+      <Image
+        src={medicamento.imagem}
+        alt={medicamento.nome}
+        width={200}
+        height={200}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import { Control, Controller } from "react-hook-form";
 import { twMerge } from "tailwind-merge";

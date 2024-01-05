@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { TMedicamento } from "@/src/types/types";
 import { deleteData } from "@/src/services";
@@ -20,19 +21,19 @@ const Medicamento = ({
   const router = useRouter();
 
   const handleDelete = async (id: any) => {
-    await deleteData(id);
-    toast("Excluido", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    // await deleteData(id);
+    toast.error("Medicamento excluído !");
     router.refresh();
   };
+
+  const originalDate = new Date(data_de_validade);
+
+  const day = originalDate.getDate();
+  const month = originalDate.getMonth() + 1;
+  const year = originalDate.getFullYear();
+
+  const formattedDate = `${day}/${month}/${year}`;
+
   return (
     <>
       <tr key={id} className="">
@@ -42,7 +43,7 @@ const Medicamento = ({
             R${preco.toLocaleString()}
           </div>
         </td>
-        <td className="p-2 text-center">{data_de_validade}</td>
+        <td className="p-2 text-center">{formattedDate}</td>
         <td className="px-6 py-4 text-center">
           <span
             className={`inline-flex items-center gap-1 rounded-full ${
