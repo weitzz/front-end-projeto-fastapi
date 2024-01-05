@@ -3,11 +3,17 @@ import Title from "../Title/Title";
 import Button from "../Button/Button";
 
 import FormPost from "../FormPost/FormPost";
+import { TMedicamento } from "@/src/types/types";
+import { toast } from "react-toastify";
 
 interface ModalProps {
   show: boolean;
   setShow: () => void;
 }
+const submit = (data: TMedicamento) => {
+  console.log(data);
+  toast.success("foi");
+};
 
 const Modal = ({ show, setShow }: ModalProps) => {
   return (
@@ -21,7 +27,7 @@ const Modal = ({ show, setShow }: ModalProps) => {
                   <Title text="Adicionar novo medicamento" />
                 </div>
                 <div className="relative p-5 flex-auto flex flex-col gap-5">
-                  <FormPost edit={false} />
+                  <FormPost onSubmit={submit} />
 
                   <div className="flex gap-2 items-center justify-end p-6 border-t border-solid rounded-b">
                     <Button

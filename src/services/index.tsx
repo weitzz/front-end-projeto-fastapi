@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 //http://localhost:3002/api/medicamentos
 //http://localhost:3004/medicamentos
-const apiBaseUrl: any = `${process.env.NEXT_API_URL}medicamentos`;
+const apiBaseUrl: any = `${process.env.NEXT_API_URL}medicamentos/`;
 
 // async function getData(id: number) {
 //   const response = await fetch(apiBaseUrl, { cache: 'no-store' });
@@ -90,7 +90,7 @@ export async function getId(id: string) {
 }
 
 export async function deleteData(id: string) {
-  await fetch(`${apiBaseUrl}/${id}`, {
+  await fetch(`http://localhost:8000/api/medicamentos/${id}`, {
     method: "DELETE",
   });
 }
