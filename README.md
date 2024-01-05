@@ -1,4 +1,4 @@
-## 💻 Teste Nextjs 13 + FastApi
+## 💻 Cadastro de medicamentos com  Nextjs 13 + FastApi
 
 > OBS: projetinho pessoal em construção...
 
