@@ -29,6 +29,7 @@ Rode `npm start` na pasta raiz. Acesse via **localhost:3000**.
 - React-hook-form
 - Zod
 - Tailwind
+- Toastfy
 - FastApi
 
  <p align="center">Feito com ❤️ por <strong>Tatiane Weitzel<p>
