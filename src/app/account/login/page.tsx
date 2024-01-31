@@ -100,7 +100,11 @@ const Login = () => {
         <div className="border-2 w-10 border-white inline-block mb-2 "></div>
         <p className="mb-10 text-neutral-200">É rápido e fácil!</p>
         <div className="flex items-center justify-center">
-          <Button href="/register" variant="default" className="w-72 ">
+          <Button
+            variant="default"
+            className="w-72"
+            onClick={() => router.push("/account/register")}
+          >
             <FiLogIn className="m-1" /> Criar conta
           </Button>
         </div>

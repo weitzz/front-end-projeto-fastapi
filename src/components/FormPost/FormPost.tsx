@@ -1,5 +1,5 @@
-import { TMedicamentoPost } from "@/src/types/types";
-import React from "react";
+import { TMedicamento, TMedicamentoPost } from "@/src/types/types";
+import React, { useState } from "react";
 import {
   Control,
   FieldValues,
@@ -12,18 +12,58 @@ import Input from "../Input/Input";
 import Checkbox from "../Checkbox/Checkbox";
 import Button from "../Button/Button";
 import DatePickerInput from "../DataPicker/DataPicker";
-import Image from "next/image";
+import { toast } from "react-toastify";
 import UploadImage from "../FileInput/UploadImage";
+import useModal from "@/src/hooks/useModal";
+import { postData } from "@/src/services";
 interface FormPostProps {
   onSubmit?: SubmitHandler<TMedicamentoPost> | any;
   initialValue?: TMedicamentoPost;
+  onFileChange?: () => void;
 }
 
-const FormPost = ({ initialValue, onSubmit }: FormPostProps) => {
-  console.log("formpost");
+const INITIAL_VALUES: TMedicamentoPost = {
+  nome: "",
+  preco: 0,
+  data_de_validade: "",
+  estoque: false,
+  quantidade: "",
+  imagem: "",
+};
+
+const FormPost = () => {
+  const { closeModal } = useModal();
+  const [file, setFile] = useState<File | null>(null);
   const methods: UseFormReturn<TMedicamentoPost> = useForm({
-    defaultValues: initialValue,
+    defaultValues: INITIAL_VALUES,
   });
+  const onSubmit = async (data: TMedicamento) => {
+    try {
+      if (!file) throw new Error("Nenhum arquivo selecionado");
+
+      const formData = new FormData();
+      formData.append("imagem", file);
+      formData.append("nome", data.nome);
+      formData.append("preco", data.preco.toString());
+      formData.append("data_de_validade", data.data_de_validade);
+      formData.append("quantidade", data.quantidade);
+      formData.append("estoque", data.estoque?.toString());
+
+      console.log("file", file);
+
+      const response = await postData(formData);
+
+      // Lidar com a resposta do servidor (por exemplo, exibir uma mensagem de sucesso)
+      console.log("Response from server:", response);
+      toast.success("Medicamento cadastrado com sucesso");
+
+      // Fechar o modal após o sucesso
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao cadastrar medicamento:", error);
+      toast.error(`Erro ao cadastrar medicamento. Tente novamente.${error}`);
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -80,15 +120,14 @@ const FormPost = ({ initialValue, onSubmit }: FormPostProps) => {
           name="imagem"
           control={methods.control as unknown as Control<FieldValues>}
         />
-
-        <Button
-          type="submit"
-          className="border-2 w-52 border-white bg-green-600
-                    text-neutral-100 rounded-lg px-12 py-2 flex flex-row items-center
-                    justify-center font-semibold hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600 transition duration-150 ease-in-out"
-        >
-          Salvar
-        </Button>
+        <div className="flex gap-2 items-center justify-between p-6 border-t border-solid rounded-b">
+          <Button type="submit" variant="primary">
+            Salvar
+          </Button>
+          <Button onClick={closeModal} variant="secondary">
+            Cancelar
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );

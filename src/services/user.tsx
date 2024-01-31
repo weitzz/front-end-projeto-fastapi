@@ -1,4 +1,4 @@
-import { TMedicamento, TMedicamentoPost, TUser } from "@/src/types/types";
+import { TMedicamento, TMedicamentoPost } from "@/src/types/types";
 import { useRouter } from "next/navigation";
 
 //http://localhost:3002/api/medicamentos
@@ -53,21 +53,21 @@ export async function login(user: FormData) {
   }
 }
 
-export async function editUser(user: TUser) {
-  const res = await fetch(`${apiBaseUrl}${user.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ ...user }),
-  });
-  if (res.ok) {
-    const updateMedicamento = res.json();
-    return updateMedicamento;
-  } else {
-    console.error("Erro ao editar medicamento");
-  }
-}
+// export async function editUser(user: TUser) {
+//   const res = await fetch(`${apiBaseUrl}${user.id}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ ...user }),
+//   });
+//   if (res.ok) {
+//     const updateMedicamento = res.json();
+//     return updateMedicamento;
+//   } else {
+//     console.error("Erro ao editar medicamento");
+//   }
+// }
 
 export async function getId(id: string) {
   const res = await fetch(`${apiBaseUrl}${id}`, {
