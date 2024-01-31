@@ -13,9 +13,11 @@ import { registerFormSchema } from "@/validations/schemasForm";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [message, setMessage] = useState(null);
+  const router = useRouter();
   // const session = await getServerSession();
   // if (session) {
   //   redirect("/medicamentos");
@@ -131,9 +133,15 @@ const Register = () => {
         <p className="mb-10 text-neutral-200">
           Por favor, faça o login na sua conta
         </p>
-        <Button href="/login" variant="default">
-          <FiLogIn className="m-1" /> Entrar
-        </Button>
+        <div className="flex items-center justify-center">
+          <Button
+            className="w-72"
+            variant="default"
+            onClick={() => router.push("/account/login")}
+          >
+            <FiLogIn className="m-1" /> Entrar
+          </Button>
+        </div>
       </section>
     </>
   );

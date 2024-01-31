@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { TMedicamento } from "@/src/types/types";
 import { deleteData } from "@/src/services";
+import { formatPrice } from "@/src/utils/formatPrice";
+import { formatDate } from "@/src/utils/formatDate";
 
 const Medicamento = ({
   id,
@@ -26,24 +28,16 @@ const Medicamento = ({
     router.refresh();
   };
 
-  const originalDate = new Date(data_de_validade);
-
-  const day = originalDate.getDate();
-  const month = originalDate.getMonth() + 1;
-  const year = originalDate.getFullYear();
-
-  const formattedDate = `${day}/${month}/${year}`;
-
   return (
     <>
       <tr key={id} className="">
         <td className="p-2 text-center ">{nome}</td>
         <td className="p-2 whitespace-nowrap text-center">
           <div className="text-center font-medium text-green-500">
-            R${preco.toLocaleString()}
+            {formatPrice(preco)}
           </div>
         </td>
-        <td className="p-2 text-center">{formattedDate}</td>
+        <td className="p-2 text-center">{formatDate(data_de_validade)}</td>
         <td className="px-6 py-4 text-center">
           <span
             className={`inline-flex items-center gap-1 rounded-full ${

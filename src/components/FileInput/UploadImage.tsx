@@ -1,10 +1,5 @@
 "use client";
-import {
-  UseControllerProps,
-  useController,
-  Controller,
-  Control,
-} from "react-hook-form";
+import { UseControllerProps, Controller, Control } from "react-hook-form";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { TMedicamento } from "@/src/types/types";
@@ -26,12 +21,13 @@ const UploadImage = ({ control, medicamento }: UploadImageProps) => {
       if (imagePreview) URL.revokeObjectURL(imagePreview);
     };
   }, [imagePreview]);
+
   return (
     <>
       <Controller
         name="imagem"
         control={control}
-        defaultValue={imagePreview}
+        defaultValue={null}
         render={({ field: { ref, name, onChange } }) => (
           <ContainerInput>
             <input
@@ -42,7 +38,7 @@ const UploadImage = ({ control, medicamento }: UploadImageProps) => {
               name={name}
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                onChange(e.target.files?.[0]);
+                onChange(file);
                 setImagePreview(file ? URL.createObjectURL(file) : null);
               }}
             />

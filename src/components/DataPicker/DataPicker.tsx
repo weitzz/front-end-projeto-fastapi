@@ -20,7 +20,7 @@ const DatePickerInput = ({ name, error, control }: DatePickerInputProps) => {
     <Controller
       control={control}
       name={name}
-      defaultValue={new Date()}
+      defaultValue={null}
       render={({ field, fieldState }) => (
         <>
           <label className="text-gray-500">Data de validade</label>
