@@ -10,24 +10,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { twMerge } from "tailwind-merge";
 
 interface DatePickerInputProps extends UseControllerProps {
-  name: string;
   error?: any;
-  control: Control<FieldValues>;
+  control: Control<any>;
 }
 
-const DatePickerInput = ({ name, error, control }: DatePickerInputProps) => {
+const DatePickerInput = ({ error, control }: DatePickerInputProps) => {
   return (
     <Controller
       control={control}
-      name={name}
-      defaultValue={null}
+      name="data_de_validade"
       render={({ field, fieldState }) => (
         <>
           <label className="text-gray-500">Data de validade</label>
           {error && <span className="text-rose-600 text-sm mb-1">{error}</span>}
           <div className={twMerge(error && " border-rose-600")}>
             <DatePicker
-              {...field}
               selected={field.value}
               onChange={(date) => field.onChange(date)}
               dateFormat="dd/MM/yyyy"

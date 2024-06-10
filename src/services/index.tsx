@@ -5,23 +5,6 @@ import { useRouter } from "next/navigation";
 //http://localhost:3004/medicamentos
 const apiBaseUrl: any = `${process.env.NEXT_API_URL}medicamentos/`;
 
-// async function getData(id: number) {
-//   const response = await fetch(apiBaseUrl, { cache: 'no-store' });
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch data');
-//   }
-
-//   const data = await response.json(); // Converter a resposta em JSON
-
-//   const medicamento = data.find(
-//     (item: TMedicamento) => item.id === `${apiBaseUrl}${id}`,
-//   );
-
-//   return medicamento; // Retornar o medicamento encontrado
-// }
-
-// export default getData
-
 export async function getDataAll() {
   try {
     const response = await fetch("http://localhost:8000/api/medicamentos/", {
@@ -29,7 +12,8 @@ export async function getDataAll() {
       method: "GET",
     });
     if (!response.ok) {
-      throw new Error("Failed to fetch data");
+      console.log(response.statusText);
+      throw new Error(`Status: ${response.status} ops.algo deu errado.`);
     }
 
     return await response.json();
@@ -39,7 +23,7 @@ export async function getDataAll() {
   }
 }
 
-export async function postData(medicamento: FormData) {
+export async function postData(medicamento: any) {
   try {
     const res = await fetch("http://localhost:8000/api/medicamentos/", {
       method: "POST",
@@ -68,10 +52,7 @@ export async function editData(medicamento: any) {
     `http://localhost:8000/api/medicamentos/${medicamento.id}`,
     {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...medicamento }),
+      body: medicamento,
     }
   );
   if (res.ok) {

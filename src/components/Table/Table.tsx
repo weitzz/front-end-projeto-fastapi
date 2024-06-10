@@ -10,7 +10,6 @@ const tableList = [
     nome: "Data de validade",
     dados: "dataValidade",
   },
-  { nome: "Estoque", dados: "estoque" },
   { nome: "Quantidade", dados: "quantidade" },
   { nome: "Imagem", dados: "imagem" },
   { nome: "Ações", dados: "acoes" },
@@ -18,6 +17,8 @@ const tableList = [
 
 const Table = async () => {
   const data = await getDataAll();
+
+  console.log(data);
 
   return (
     <table className=" w-full h-auto mt-8">
@@ -39,7 +40,6 @@ const Table = async () => {
                 nome={item.nome}
                 preco={item.preco}
                 data_de_validade={item.data_de_validade}
-                estoque={item.estoque}
                 quantidade={item.quantidade}
                 imagem={item.imagem}
               />
