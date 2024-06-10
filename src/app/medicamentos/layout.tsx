@@ -1,6 +1,5 @@
 import Header from "@/src/components/Header/Header";
 import Sidebar from "@/src/components/Sidebar/Sidebar";
-import { ToastContainer } from "react-toastify";
 
 export default function DashboardLayout({
   children,

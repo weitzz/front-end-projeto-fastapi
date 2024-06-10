@@ -1,54 +1,48 @@
 "use client";
-import { UseControllerProps, Controller, Control } from "react-hook-form";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { TMedicamento } from "@/src/types/types";
+
+import { ChangeEvent, ComponentProps } from "react";
+
+import Root, { useFileInput } from "./Root";
+import { Control, Controller } from "react-hook-form";
 import ContainerInput from "./ContainerInput";
+import ImagePreview from "./ImagePreview";
 
-interface UploadImageProps extends UseControllerProps {
+export type UploadImageProps = {
   name: string;
-  control: Control;
-  medicamento?: TMedicamento;
-}
+  control: Control<any>;
+};
 
-const UploadImage = ({ control, medicamento }: UploadImageProps) => {
-  const [imagePreview, setImagePreview] = useState<string | null>(
-    medicamento ? medicamento.imagem : null
-  );
+const UploadImage = ({ control, name }: UploadImageProps) => {
+  const { id, onFileSelected } = useFileInput();
 
-  useEffect(() => {
-    return () => {
-      if (imagePreview) URL.revokeObjectURL(imagePreview);
-    };
-  }, [imagePreview]);
-
+  const handleFilesSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.length) {
+      return;
+    }
+    const files = Array.from(e.target.files);
+    onFileSelected(files);
+  };
+  console.log(id);
   return (
-    <>
+    <Root>
+      <ContainerInput />
       <Controller
         name="imagem"
         control={control}
         defaultValue={null}
-        render={({ field: { ref, name, onChange } }) => (
-          <ContainerInput>
-            <input
-              id="dropzone-file"
-              className="hidden"
-              type="file"
-              ref={ref}
-              name={name}
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                onChange(file);
-                setImagePreview(file ? URL.createObjectURL(file) : null);
-              }}
-            />
-          </ContainerInput>
+        render={({ field: { ref, name } }) => (
+          <input
+            id={id}
+            className="sr-only"
+            type="file"
+            ref={ref}
+            name={name}
+            onChange={handleFilesSelected}
+          />
         )}
       />
-      {imagePreview && (
-        <Image src={imagePreview} alt="preview" width={200} height={200} />
-      )}
-    </>
+      <ImagePreview />
+    </Root>
   );
 };
 

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import useModal from "@/src/hooks/useModal";
-import FormPost from "../FormPost/FormPost";
+import { FormPost2 } from "../FormPost/FormPost2";
 import { TMedicamento, TMedicamentoPost } from "@/src/types/types";
 import { toast } from "react-toastify";
 import { postData } from "@/src/services";
@@ -14,12 +14,8 @@ import {
   UseFormReturn,
   useForm,
 } from "react-hook-form";
-import Input from "../Input/Input";
-import Checkbox from "../Checkbox/Checkbox";
-import Button from "../Button/Button";
-import DatePickerInput from "../DataPicker/DataPicker";
 
-import UploadImage from "../FileInput/UploadImage";
+import Button from "../Button/Button";
 
 const INITIAL_VALUES: TMedicamentoPost = {
   nome: "",
@@ -52,7 +48,7 @@ const CreateMedicamento = () => {
         closeModal={() => closeModal()}
         title="Cadastrar medicamento"
       >
-        <FormPost />
+        <FormPost2 />
       </Modal>
     </>
   );

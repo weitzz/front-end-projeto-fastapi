@@ -1,6 +1,7 @@
 import React from "react";
 import Title from "../Title/Title";
 import Button from "../Button/Button";
+import { LuXCircle } from "react-icons/lu";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,7 +21,9 @@ const Modal = ({ isOpen, closeModal, children, title }: ModalProps) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200">
               <Title text={title} />
-              <button onClick={closeModal}>X</button>
+              <button onClick={closeModal}>
+                <LuXCircle size={25} />
+              </button>
             </div>
             <div className="relative p-5 flex-auto flex flex-col gap-5">
               {children}

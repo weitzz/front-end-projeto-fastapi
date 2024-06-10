@@ -1,5 +1,5 @@
 import { TMedicamento, TMedicamentoPost } from "@/src/types/types";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Control,
   FieldValues,
@@ -13,9 +13,12 @@ import Checkbox from "../Checkbox/Checkbox";
 import Button from "../Button/Button";
 import DatePickerInput from "../DataPicker/DataPicker";
 import { toast } from "react-toastify";
-import UploadImage from "../FileInput/UploadImage";
 import useModal from "@/src/hooks/useModal";
 import { postData } from "@/src/services";
+import Root, { useFileInput } from "../FileInput/Root";
+import UploadImage from "../FileInput/UploadImage";
+import ImagePreview from "../FileInput/ImagePreview";
+import ContainerInput from "../FileInput/ContainerInput";
 interface FormPostProps {
   onSubmit?: SubmitHandler<TMedicamentoPost> | any;
   initialValue?: TMedicamentoPost;
@@ -26,30 +29,29 @@ const INITIAL_VALUES: TMedicamentoPost = {
   nome: "",
   preco: 0,
   data_de_validade: "",
-  estoque: false,
-  quantidade: "",
+
   imagem: "",
 };
 
 const FormPost = () => {
   const { closeModal } = useModal();
-  const [file, setFile] = useState<File | null>(null);
+
+  const { files } = useFileInput();
+
   const methods: UseFormReturn<TMedicamentoPost> = useForm({
     defaultValues: INITIAL_VALUES,
   });
   const onSubmit = async (data: TMedicamento) => {
     try {
-      if (!file) throw new Error("Nenhum arquivo selecionado");
+      if (!files) throw new Error("Nenhum arquivo selecionado");
 
       const formData = new FormData();
-      formData.append("imagem", file);
+      formData.append("imagem", files[0]);
       formData.append("nome", data.nome);
       formData.append("preco", data.preco.toString());
       formData.append("data_de_validade", data.data_de_validade);
-      formData.append("quantidade", data.quantidade);
-      formData.append("estoque", data.estoque?.toString());
 
-      console.log("file", file);
+      console.log("file", files[0]);
 
       const response = await postData(formData);
 
@@ -116,10 +118,25 @@ const FormPost = () => {
             control={methods.control as unknown as Control<FieldValues>}
           />
         </div>
-        <UploadImage
+
+        {/* <FileInput
           name="imagem"
           control={methods.control as unknown as Control<FieldValues>}
-        />
+        /> */}
+
+        <Root>
+          <ContainerInput />
+          <UploadImage
+            name="imagem"
+            control={methods.control as unknown as Control<FieldValues>}
+          />
+          <ImagePreview />
+        </Root>
+
+        {/* <UploadImage
+          name="imagem"
+          control={methods.control as unknown as Control<FieldValues>}
+        /> */}
         <div className="flex gap-2 items-center justify-between p-6 border-t border-solid rounded-b">
           <Button type="submit" variant="primary">
             Salvar

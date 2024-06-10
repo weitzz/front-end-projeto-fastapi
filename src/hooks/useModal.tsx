@@ -17,9 +17,6 @@ const useModal = () => {
   }, []);
 
   console.log(isModalOpen);
-  console.log(openModal);
-  console.log(closeModal);
-  console.log(toggleModal);
 
   return { isModalOpen, openModal, closeModal, toggleModal };
 };
